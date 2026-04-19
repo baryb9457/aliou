@@ -1,0 +1,15 @@
+import { createClient } from '@supabase/supabase-js';
+
+const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
+
+export const isSupabaseConfigured = Boolean(supabaseUrl && supabaseAnonKey);
+
+// Use harmless placeholders in dev so the app can render even if .env is missing.
+const fallbackUrl = 'https://placeholder.supabase.co';
+const fallbackAnonKey = 'placeholder-anon-key';
+
+export const supabase = createClient(
+	supabaseUrl || fallbackUrl,
+	supabaseAnonKey || fallbackAnonKey,
+);
