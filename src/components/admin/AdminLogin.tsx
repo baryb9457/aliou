@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Lock, Mail, AlertCircle } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { isSupabaseConfigured, supabase } from '../../lib/supabase';
 import ThemeToggle from '../layout/ThemeToggle';
 import KamLogo from '../layout/KamLogo';
 
@@ -12,13 +12,34 @@ interface AdminLoginProps {
 }
 
 export default function AdminLogin({ theme, onThemeToggle, onSuccess, onBack }: AdminLoginProps) {
-  const [email, setEmail] = useState('');
+  const [identifier, setIdentifier] = useState('');
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
+  const adminLoginAlias = (import.meta.env.VITE_ADMIN_LOGIN_ALIAS ?? '').toString().trim().toLowerCase();
+  const adminEmail = (import.meta.env.VITE_ADMIN_EMAIL ?? '').toString().trim().toLowerCase();
+
+  const resolveAdminEmail = (rawIdentifier: string) => {
+    const normalized = rawIdentifier.trim().toLowerCase();
+
+    if (normalized.includes('@')) {
+      return normalized;
+    }
+
+    if (adminLoginAlias && adminEmail && normalized === adminLoginAlias) {
+      return adminEmail;
+    }
+
+    return '';
+  };
+
   const getFriendlyAuthError = (message: string) => {
     const normalized = message.toLowerCase();
+
+    if (normalized.includes('fetch') || normalized.includes('network') || normalized.includes('failed to fetch')) {
+      return 'Connexion impossible au serveur. Vérifiez la configuration Supabase et votre connexion Internet.';
+    }
 
     if (normalized.includes('email not confirmed')) {
       return 'Votre email n est pas confirme. Verifiez votre boite mail et confirmez le compte.';
@@ -33,13 +54,27 @@ export default function AdminLogin({ theme, onThemeToggle, onSuccess, onBack }: 
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+
+    if (!isSupabaseConfigured) {
+      setError('Configuration manquante: ajoutez VITE_SUPABASE_URL et VITE_SUPABASE_ANON_KEY sur Netlify.');
+      return;
+    }
+
     setLoading(true);
     setError('');
 
-    const emailValue = email.trim().toLowerCase();
+    const emailValue = resolveAdminEmail(identifier);
+    const passwordValue = password.trim();
+
+    if (!emailValue) {
+      setLoading(false);
+      setError('Identifiant invalide. Utilisez votre email admin ou configurez VITE_ADMIN_LOGIN_ALIAS + VITE_ADMIN_EMAIL.');
+      return;
+    }
+
     const { error: authError } = await supabase.auth.signInWithPassword({
       email: emailValue,
-      password,
+      password: passwordValue,
     });
 
     setLoading(false);
@@ -66,16 +101,16 @@ export default function AdminLogin({ theme, onThemeToggle, onSuccess, onBack }: 
         <div className="theme-card rounded-2xl p-8">
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
-              <label className="block theme-text-soft text-sm font-medium mb-1.5">Email</label>
+              <label className="block theme-text-soft text-sm font-medium mb-1.5">Identifiant (email admin)</label>
               <div className="relative">
                 <Mail size={16} className="absolute left-3.5 top-1/2 -translate-y-1/2 theme-text-muted" />
                 <input
-                  type="email"
+                  type="text"
                   required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
+                  value={identifier}
+                  onChange={(e) => setIdentifier(e.target.value)}
                   className="theme-input w-full rounded-xl pl-10 pr-4 py-2.5 text-sm"
-                  placeholder="admin@example.com"
+                  placeholder="admin@example.com ou alias"
                 />
               </div>
             </div>
