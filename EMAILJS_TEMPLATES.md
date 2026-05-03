@@ -36,7 +36,6 @@ Type service: {{service_type}}
 
 {{company_name}}
 
-Variables attendues par le code
 
 - to_email
 - to_name
@@ -50,13 +49,11 @@ Variables attendues par le code
 - subject
 - company_name
 
-Ou les trouver dans le projet
 
 - Envoi contact: src/lib/email.ts
 - Envoi devis: src/lib/email.ts
 - Variables .env: .env
 
-Configuration conseillee dans .env
 
 VITE_EMAILJS_SERVICE_ID=ton_service_id
 VITE_EMAILJS_CONTACT_TEMPLATE_ID=ton_template_contact
