@@ -19,7 +19,7 @@ export default function Hero() {
             Développeur & Technicien IT
           </span>
           <h1 className="theme-text text-5xl md:text-6xl font-extrabold leading-tight mb-6">
-            Votre Confiant <span className="theme-brand">numérique</span> vous écoute et vous accompagne
+            Votre partenaire <span className="theme-brand">numérique</span> vous écoute et vous accompagne
           </h1>
           <p className="theme-text-muted text-lg leading-relaxed mb-8 max-w-xl">
             Développement web & mobile sur mesure, support informatique et gestion administrative. Aliou vous accompagne à chaque étape de votre transformation numérique.
