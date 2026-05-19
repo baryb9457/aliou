@@ -4,7 +4,7 @@ export const businessInfo = {
   tagline: 'Developpement web, support informatique et accompagnement administratif',
   email: 'baryb9457@gmail.com',
   phone: '+33 06 05 54 74 63',
-  location: "France et a l'international",
+  location: "France et à l'international",
   legalDetails: {
     siret: '',
     address: '',
