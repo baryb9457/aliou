@@ -1,7 +1,7 @@
 export const businessInfo = {
   brandName: 'KAM',
   businessName: 'KAM Services',
-  tagline: 'Developpement web, support informatique et accompagnement administratif',
+  tagline: 'Développement web, support informatique et accompagnement administratif',
   email: 'baryb9457@gmail.com',
   phone: '+33 06 05 54 74 63',
   location: "France et à l'international",

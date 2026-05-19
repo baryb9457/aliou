@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { Send, CheckCircle, AlertCircle } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { formatSupabaseError, supabase } from '../../lib/supabase';
 import type { ServiceType } from '../../types';
 import { sendContactNotification } from '../../lib/email';
 
@@ -93,13 +93,17 @@ export default function Contact() {
       return;
     }
 
-    const { error } = await supabase.from('contact_requests').insert([validation.payload]);
+    try {
+      const { error } = await supabase.from('contact_requests').insert([validation.payload]);
 
-    setLoading(false);
-    if (error) {
-      setStatus('error');
-      setErrorMessage('Une erreur est survenue. Veuillez réessayer.');
-    } else {
+      setLoading(false);
+      if (error) {
+        console.error('Contact request insert error:', error);
+        setStatus('error');
+        setErrorMessage(formatSupabaseError(error));
+        return;
+      }
+
       window.localStorage.setItem('contact_last_submit_at', String(Date.now()));
       try {
         await sendContactNotification(validation.payload);
@@ -109,7 +113,15 @@ export default function Contact() {
         console.error('EmailJS notification failed', emailError);
         setStatus('error');
         setErrorMessage('Votre demande est enregistrée, mais l envoi email a échoué. Vérifiez la configuration EmailJS (service/template/public key).');
-        return;
+      }
+    } catch (runtimeError) {
+      setLoading(false);
+      setStatus('error');
+      console.error('Contact request runtime error:', runtimeError);
+      if (runtimeError instanceof Error) {
+        setErrorMessage(formatSupabaseError({ message: runtimeError.message }));
+      } else {
+        setErrorMessage('Erreur inattendue lors de l envoi.');
       }
     }
   };

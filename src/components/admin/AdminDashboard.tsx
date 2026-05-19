@@ -3,7 +3,7 @@ import {
   LogOut, RefreshCw, Inbox, FileText, Clock,
   CheckCircle, ChevronRight, Plus, Eye, Trash2, Download,
 } from 'lucide-react';
-import { supabase } from '../../lib/supabase';
+import { formatSupabaseError, supabase } from '../../lib/supabase';
 import type { ContactRequest, Devis, RequestStatus } from '../../types';
 import DevisModal from './DevisModal';
 import ThemeToggle from '../layout/ThemeToggle';
@@ -48,14 +48,25 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
   const [selectedDevis, setSelectedDevis] = useState<Devis | null>(null);
   const [showDevisModal, setShowDevisModal] = useState(false);
   const [devisForRequest, setDevisForRequest] = useState<ContactRequest | null>(null);
+  const [loadError, setLoadError] = useState('');
 
   const fetchData = useCallback(async () => {
     setLoading(true);
+    setLoadError('');
 
     const [reqRes, devRes] = await Promise.all([
       supabase.from('contact_requests').select('*').order('created_at', { ascending: false }),
       supabase.from('devis').select('*').order('created_at', { ascending: false }),
     ]);
+
+    if (reqRes.error || devRes.error) {
+      const firstError = reqRes.error || devRes.error;
+      console.error('Admin dashboard fetch error:', {
+        requestsError: reqRes.error,
+        devisError: devRes.error,
+      });
+      setLoadError(formatSupabaseError(firstError));
+    }
 
     if (reqRes.data) {
       setRequests(reqRes.data as ContactRequest[]);
@@ -77,14 +88,24 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
   };
 
   const updateRequestStatus = async (id: string, status: RequestStatus) => {
-    await supabase.from('contact_requests').update({ status }).eq('id', id);
+    const { error } = await supabase.from('contact_requests').update({ status }).eq('id', id);
+    if (error) {
+      setLoadError(formatSupabaseError(error));
+      return;
+    }
+
     setRequests((prev) => prev.map((request) => (request.id === id ? { ...request, status } : request)));
   };
 
   const deleteRequest = async (id: string) => {
     if (!confirm('Supprimer cette demande ?')) return;
 
-    await supabase.from('contact_requests').delete().eq('id', id);
+    const { error } = await supabase.from('contact_requests').delete().eq('id', id);
+    if (error) {
+      setLoadError(formatSupabaseError(error));
+      return;
+    }
+
     setRequests((prev) => prev.filter((request) => request.id !== id));
 
     if (selectedRequest?.id === id) {
@@ -95,7 +116,12 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
   const deleteDevis = async (id: string) => {
     if (!confirm('Supprimer ce devis ?')) return;
 
-    await supabase.from('devis').delete().eq('id', id);
+    const { error } = await supabase.from('devis').delete().eq('id', id);
+    if (error) {
+      setLoadError(formatSupabaseError(error));
+      return;
+    }
+
     setDevisList((prev) => prev.filter((devis) => devis.id !== id));
   };
 
@@ -166,6 +192,13 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
             </button>
           ))}
         </div>
+
+        {loadError && (
+          <div className="mb-4 flex items-center gap-2 text-red-400 text-sm bg-red-400/10 border border-red-400/20 rounded-xl px-4 py-3">
+            <AlertTriangle size={16} />
+            {loadError}
+          </div>
+        )}
 
         {loading ? (
           <div className="flex justify-center py-20">
@@ -390,6 +423,16 @@ function X({ size, className }: { size: number; className?: string }) {
   return (
     <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className={className}>
       <path d="M18 6 6 18M6 6l12 12" />
+    </svg>
+  );
+}
+
+function AlertTriangle({ size }: { size: number }) {
+  return (
+    <svg width={size} height={size} viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+      <path d="M10.29 3.86 1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0Z" />
+      <path d="M12 9v4" />
+      <path d="M12 17h.01" />
     </svg>
   );
 }

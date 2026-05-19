@@ -37,6 +37,10 @@ export default function AdminLogin({ theme, onThemeToggle, onSuccess, onBack }: 
   const getFriendlyAuthError = (message: string) => {
     const normalized = message.toLowerCase();
 
+    if (normalized.includes('invalid api key') || normalized.includes('apikey') || normalized.includes('jwt')) {
+      return 'Clé Supabase invalide. Vérifiez VITE_SUPABASE_ANON_KEY sur Netlify (clé publique du même projet que VITE_SUPABASE_URL).';
+    }
+
     if (normalized.includes('fetch') || normalized.includes('network') || normalized.includes('failed to fetch')) {
       return 'Connexion impossible au serveur. Vérifiez la configuration Supabase et votre connexion Internet.';
     }
