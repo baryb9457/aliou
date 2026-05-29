@@ -41,6 +41,7 @@ export default function Header({ theme, onThemeToggle, onAdminClick }: HeaderPro
 
         <nav className="hidden md:flex items-center gap-8">
           {[
+            { label: 'Projets', id: 'projects' },
             { label: 'Services', id: 'services' },
             { label: 'Témoignages', id: 'testimonials' },
             { label: 'Contact', id: 'contact' },
@@ -76,6 +77,7 @@ export default function Header({ theme, onThemeToggle, onAdminClick }: HeaderPro
       {menuOpen && (
         <div className="md:hidden theme-card border-x-0 border-b-0 rounded-none px-6 py-4 flex flex-col gap-4">
           {[
+            { label: 'Projets', id: 'projects' },
             { label: 'Services', id: 'services' },
             { label: 'Témoignages', id: 'testimonials' },
             { label: 'Contact', id: 'contact' },
