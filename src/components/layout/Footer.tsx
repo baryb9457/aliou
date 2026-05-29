@@ -18,7 +18,11 @@ export default function Footer() {
         <div>
           <h3 className="theme-text font-semibold mb-4 text-sm uppercase tracking-wider">Services</h3>
           <ul className="space-y-2 theme-text-muted text-sm">
-            <li>Projets publiés</li>
+            <li>
+              <a href="#projects" className="theme-link">
+                Projets publiés
+              </a>
+            </li>
             <li>Développement web</li>
             <li>Support informatique</li>
             <li>Gestion administrative</li>
