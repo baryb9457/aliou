@@ -4,6 +4,7 @@ import type { Session } from '@supabase/supabase-js';
 import Header from './components/layout/Header';
 import Footer from './components/layout/Footer';
 import Hero from './components/home/Hero';
+import VisitorsCounter from './components/home/VisitorsCounter';
 import Services from './components/home/Services';
 import Testimonials from './components/home/Testimonials';
 import Contact from './components/home/Contact';
@@ -91,6 +92,7 @@ export default function App() {
       />
       <main>
         <Hero />
+        <VisitorsCounter />
         <Services />
         <Testimonials />
         <Contact />
