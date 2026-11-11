@@ -1,5 +1,4 @@
-import { useEffect, useState } from 'react';
-import { Globe, Monitor, FileText, Wrench, Shield, Zap, ChevronLeft, ChevronRight } from 'lucide-react';
+import { FileText, Globe, Monitor, Shield, Wrench, Zap } from 'lucide-react';
 
 const services = [
   {
@@ -59,40 +58,6 @@ const iconColorMap: Record<string, string> = {
 };
 
 export default function Services() {
-  const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % services.length);
-    }, 4200);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
-
-  const goToPrev = () => {
-    setActiveIndex((prev) => (prev - 1 + services.length) % services.length);
-  };
-
-  const goToNext = () => {
-    setActiveIndex((prev) => (prev + 1) % services.length);
-  };
-
-  const getSlideState = (index: number) => {
-    if (index === activeIndex) {
-      return 'opacity-100 translate-x-0 scale-100 z-20';
-    }
-
-    if (index === (activeIndex + 1) % services.length) {
-      return 'opacity-0 translate-x-10 scale-95 z-10';
-    }
-
-    if (index === (activeIndex - 1 + services.length) % services.length) {
-      return 'opacity-0 -translate-x-10 scale-95 z-10';
-    }
-
-    return 'opacity-0 scale-95 z-0';
-  };
-
   return (
     <section id="services" className="theme-section py-24 px-6">
       <div className="max-w-6xl mx-auto">
@@ -106,71 +71,32 @@ export default function Services() {
           </p>
         </div>
 
-        <div className="max-w-3xl mx-auto">
-          <div className="relative min-h-[310px] sm:min-h-[270px]">
-            {services.map((service, index) => {
-              const Icon = service.icon;
-              return (
-                <article
-                  key={service.title}
-                  className={`theme-card rounded-2xl p-6 sm:p-7 group absolute inset-0 transition-all duration-700 ease-out ${getSlideState(index)}`}
-                  aria-hidden={index !== activeIndex}
-                >
-                  <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 ${iconColorMap[service.color]}`}>
-                    <Icon size={22} />
-                  </div>
-                  <h3 className="theme-text font-bold text-lg mb-2 group-hover:text-teal-500 transition-colors">{service.title}</h3>
-                  <p className="theme-text-muted text-sm leading-relaxed mb-4">{service.description}</p>
-                  <div className="flex flex-wrap gap-2">
-                    {service.tags.map((tag) => (
-                      <span
-                        key={tag}
-                        className={`text-xs px-2.5 py-1 rounded-full border font-medium ${colorMap[service.color]}`}
-                      >
-                        {tag}
-                      </span>
-                    ))}
-                  </div>
-                </article>
-              );
-            })}
-          </div>
-
-          <div className="mt-6 flex items-center justify-center gap-3">
-            <button
-              type="button"
-              onClick={goToPrev}
-              aria-label="Service précédent"
-              className="theme-card w-10 h-10 rounded-full flex items-center justify-center theme-text hover:opacity-80 transition"
-            >
-              <ChevronLeft size={18} />
-            </button>
-
-            <div className="flex items-center gap-2">
-              {services.map((service, index) => (
-                <button
-                  key={service.title}
-                  type="button"
-                  onClick={() => setActiveIndex(index)}
-                  aria-label={`Afficher le service ${index + 1}`}
-                  className={`h-2.5 rounded-full transition-all ${
-                    activeIndex === index
-                      ? 'w-7 theme-brand-bg'
-                      : 'w-2.5 bg-[color:var(--theme-border)] hover:bg-[color:var(--theme-brand)]/60'
-                  }`}
-                />
-              ))}
-            </div>
-
-            <button
-              type="button"
-              onClick={goToNext}
-              aria-label="Service suivant"
-              className="theme-card w-10 h-10 rounded-full flex items-center justify-center theme-text hover:opacity-80 transition"
-            >
-              <ChevronRight size={18} />
-            </button>
-          </div>
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {services.map((service) => {
+            const Icon = service.icon;
+            return (
+              <article
+                key={service.title}
+                className="theme-card rounded-2xl p-6 transition-transform duration-300 hover:-translate-y-1"
+              >
+                <div className={`mb-5 flex h-12 w-12 items-center justify-center rounded-xl ${iconColorMap[service.color]}`}>
+                  <Icon size={22} />
+                </div>
+                <h3 className="theme-text mb-2 text-lg font-bold">{service.title}</h3>
+                <p className="theme-text-muted mb-5 text-sm leading-relaxed">{service.description}</p>
+                <div className="flex flex-wrap gap-2">
+                  {service.tags.map((tag) => (
+                    <span
+                      key={tag}
+                      className={`rounded-full border px-2.5 py-1 text-xs font-medium ${colorMap[service.color]}`}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </article>
+            );
+          })}
         </div>
       </div>
     </section>

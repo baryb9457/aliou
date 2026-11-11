@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import { Star, Quote, ChevronLeft, ChevronRight } from 'lucide-react';
 
 const testimonials = [
@@ -54,14 +54,6 @@ const testimonials = [
 
 export default function Testimonials() {
   const [activeIndex, setActiveIndex] = useState(0);
-
-  useEffect(() => {
-    const intervalId = window.setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % testimonials.length);
-    }, 4500);
-
-    return () => window.clearInterval(intervalId);
-  }, []);
 
   const goToPrev = () => {
     setActiveIndex((prev) => (prev - 1 + testimonials.length) % testimonials.length);
@@ -173,20 +165,6 @@ export default function Testimonials() {
           </div>
         </div>
 
-        <div className="mt-12 text-center">
-          <div className="theme-card inline-flex items-center gap-6 rounded-2xl px-8 py-5">
-            {[
-              { value: '150+', label: 'Clients satisfaits' },
-              { value: '98%', label: 'Taux de satisfaction' },
-              { value: '2 ans', label: "D'expérience" },
-            ].map(({ value, label }) => (
-              <div key={label} className="text-center">
-                <p className="text-2xl font-extrabold theme-brand">{value}</p>
-                <p className="theme-text-muted text-xs mt-0.5">{label}</p>
-              </div>
-            ))}
-          </div>
-        </div>
       </div>
     </section>
   );

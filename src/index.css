@@ -60,6 +60,8 @@
 
 html {
 	scroll-behavior: smooth;
+	scrollbar-color: var(--brand-strong) var(--bg-section-alt);
+	scrollbar-width: thin;
 }
 
 body {
@@ -73,8 +75,49 @@ body::selection {
 	background-color: var(--brand-soft);
 }
 
+::-webkit-scrollbar {
+	width: 10px;
+}
+
+::-webkit-scrollbar-track {
+	background: var(--bg-section-alt);
+}
+
+::-webkit-scrollbar-thumb {
+	background: var(--brand-strong);
+	border: 3px solid var(--bg-section-alt);
+	border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+	background: var(--brand);
+}
+
+:focus-visible {
+	outline: 2px solid var(--brand);
+	outline-offset: 3px;
+}
+
 #root {
 	min-height: 100vh;
+}
+
+.visitor-card {
+	background:
+		radial-gradient(ellipse at 92% 10%, rgba(var(--hero-orb-1), 0.13), transparent 38%),
+		var(--bg-surface);
+}
+
+.visitor-card-glow {
+	position: absolute;
+	top: -5rem;
+	right: 15%;
+	width: 12rem;
+	height: 12rem;
+	border-radius: 999px;
+	background: rgba(var(--hero-orb-2), 0.1);
+	filter: blur(55px);
+	pointer-events: none;
 }
 
 @layer components {
@@ -218,5 +261,20 @@ body::selection {
 		background-image:
 			radial-gradient(circle at 25% 60%, rgba(var(--hero-orb-1), 0.26) 0%, transparent 50%),
 			radial-gradient(circle at 75% 30%, rgba(var(--hero-orb-2), 0.22) 0%, transparent 50%);
+	}
+}
+
+@media (prefers-reduced-motion: reduce) {
+	html {
+		scroll-behavior: auto;
+	}
+
+	*,
+	*::before,
+	*::after {
+		scroll-behavior: auto !important;
+		animation-duration: 0.01ms !important;
+		animation-iteration-count: 1 !important;
+		transition-duration: 0.01ms !important;
 	}
 }

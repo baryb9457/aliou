@@ -51,8 +51,25 @@ export default function App() {
 
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', theme);
-    window.localStorage.setItem('kam-theme', theme);
   }, [theme]);
+
+  useEffect(() => {
+    const colorScheme = window.matchMedia('(prefers-color-scheme: dark)');
+    const syncSystemTheme = () => {
+      if (!window.localStorage.getItem('kam-theme')) {
+        setTheme(colorScheme.matches ? 'dark' : 'light');
+      }
+    };
+
+    colorScheme.addEventListener('change', syncSystemTheme);
+    return () => colorScheme.removeEventListener('change', syncSystemTheme);
+  }, []);
+
+  const handleThemeToggle = () => {
+    const nextTheme = theme === 'dark' ? 'light' : 'dark';
+    window.localStorage.setItem('kam-theme', nextTheme);
+    setTheme(nextTheme);
+  };
 
   const handleAdminClick = () => {
     if (session) {
@@ -66,7 +83,7 @@ export default function App() {
     return (
       <AdminLogin
         theme={theme}
-        onThemeToggle={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+        onThemeToggle={handleThemeToggle}
         onSuccess={() => setView('admin-dashboard')}
         onBack={() => setView('home')}
       />
@@ -77,7 +94,7 @@ export default function App() {
     return (
       <AdminDashboard
         theme={theme}
-        onThemeToggle={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+        onThemeToggle={handleThemeToggle}
         onLogout={() => setView('home')}
       />
     );
@@ -87,7 +104,7 @@ export default function App() {
     <div className="theme-shell font-sans">
       <Header
         theme={theme}
-        onThemeToggle={() => setTheme((current) => (current === 'dark' ? 'light' : 'dark'))}
+        onThemeToggle={handleThemeToggle}
         onAdminClick={handleAdminClick}
       />
       <main>
