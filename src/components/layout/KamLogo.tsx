@@ -24,7 +24,7 @@ export default function KamLogo({
   return (
     <span className={`inline-flex items-center gap-3 ${className}`.trim()}>
       <span className={`relative ${current.box} ${markClassName}`.trim()}>
-        <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-teal-400 via-teal-500 to-emerald-500 shadow-[0_16px_30px_rgba(20,184,166,0.24)]" />
+        <span className="absolute inset-0 rounded-2xl bg-gradient-to-br from-sky-400 via-sky-500 to-blue-600 shadow-[0_16px_30px_rgba(14,165,233,0.24)]" />
         <span className="absolute inset-[1.5px] rounded-[15px] border border-white/20" />
         <span className={`absolute inset-0 flex items-center justify-center font-black tracking-[0.28em] text-white ${current.initials}`.trim()}>
           KAM

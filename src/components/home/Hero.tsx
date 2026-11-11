@@ -65,15 +65,15 @@ export default function Hero() {
                 <div className="w-3 h-3 rounded-full bg-green-400" />
               </div>
               <div className="space-y-3">
-                <div className="h-2.5 bg-teal-500/40 rounded w-3/4" />
+                <div className="h-2.5 bg-sky-500/40 rounded w-3/4" />
                 <div className="h-2.5 bg-slate-500/40 rounded w-full" />
                 <div className="h-2.5 bg-slate-500/40 rounded w-5/6" />
                 <div className="h-2.5 bg-slate-500/40 rounded w-2/3" />
-                <div className="h-2.5 bg-emerald-500/35 rounded w-4/5" />
+                <div className="h-2.5 bg-sky-400/35 rounded w-4/5" />
                 <div className="h-2.5 bg-slate-500/40 rounded w-full" />
                 <div className="h-2.5 bg-slate-500/40 rounded w-3/4" />
                 <div className="h-8 theme-chip rounded-lg mt-4 flex items-center px-3">
-                  <div className="h-2 bg-teal-500/60 rounded w-1/2" />
+                  <div className="h-2 bg-sky-500/60 rounded w-1/2" />
                 </div>
               </div>
               <div className="theme-brand text-xs font-mono">$ npm run dev ...</div>

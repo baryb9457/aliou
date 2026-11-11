@@ -18,14 +18,14 @@ interface AdminDashboardProps {
 
 const statusConfig: Record<RequestStatus, { label: string; color: string; bg: string }> = {
   pending: { label: 'En attente', color: 'text-amber-400', bg: 'bg-amber-400/10 border-amber-400/20' },
-  in_progress: { label: 'En cours', color: 'text-teal-400', bg: 'bg-teal-400/10 border-teal-400/20' },
-  quoted: { label: 'Devis envoyé', color: 'text-cyan-400', bg: 'bg-cyan-400/10 border-cyan-400/20' },
+  in_progress: { label: 'En cours', color: 'text-sky-400', bg: 'bg-sky-400/10 border-sky-400/20' },
+  quoted: { label: 'Devis envoyé', color: 'text-sky-300', bg: 'bg-sky-300/10 border-sky-300/20' },
   completed: { label: 'Terminé', color: 'text-green-400', bg: 'bg-green-400/10 border-green-400/20' },
 };
 
 const devisStatusConfig: Record<Devis['status'], { label: string; color: string }> = {
   draft: { label: 'Brouillon', color: 'text-slate-400' },
-  sent: { label: 'Envoyé', color: 'text-teal-400' },
+  sent: { label: 'Envoyé', color: 'text-sky-400' },
   accepted: { label: 'Accepté', color: 'text-green-400' },
   rejected: { label: 'Refusé', color: 'text-red-400' },
 };
@@ -160,8 +160,8 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
           {[
             { icon: Clock, label: 'En attente', value: stats.pending, color: 'text-amber-400' },
-            { icon: Inbox, label: 'Total demandes', value: stats.total, color: 'text-teal-400' },
-            { icon: FileText, label: 'Devis créés', value: stats.quoted, color: 'text-cyan-400' },
+            { icon: Inbox, label: 'Total demandes', value: stats.total, color: 'text-sky-400' },
+            { icon: FileText, label: 'Devis créés', value: stats.quoted, color: 'text-sky-300' },
             { icon: CheckCircle, label: 'Devis acceptés', value: stats.accepted, color: 'text-green-400' },
           ].map(({ icon: Icon, label, value, color }) => (
             <div key={label} className="theme-card rounded-xl p-4">
@@ -184,7 +184,7 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
               onClick={() => setActiveTab(key)}
               className={`flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 transition-all ${
                 activeTab === key
-                  ? 'border-teal-500 text-teal-500'
+                  ? 'border-sky-500 text-sky-500'
                   : 'border-transparent theme-text-muted hover:text-[var(--text-primary)]'
               }`}
             >
@@ -202,7 +202,7 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
 
         {loading ? (
           <div className="flex justify-center py-20">
-            <div className="w-8 h-8 border-2 border-slate-400/30 border-t-teal-500 rounded-full animate-spin" />
+            <div className="w-8 h-8 border-2 border-slate-400/30 border-t-sky-500 rounded-full animate-spin" />
           </div>
         ) : activeTab === 'requests' ? (
           <div className={`grid gap-6 ${selectedRequest ? 'md:grid-cols-2' : ''}`}>
@@ -220,7 +220,7 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
                     <div
                       key={request.id}
                       className={`theme-card rounded-xl p-4 cursor-pointer ${
-                        selectedRequest?.id === request.id ? 'border-teal-500' : ''
+                        selectedRequest?.id === request.id ? 'border-sky-500' : ''
                       }`}
                       onClick={() => setSelectedRequest(selectedRequest?.id === request.id ? null : request)}
                     >
@@ -374,7 +374,7 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
                               createdAt: devis.created_at,
                             })
                           }
-                          className="flex items-center gap-1.5 theme-text-muted hover:text-teal-500 text-xs border theme-divider hover:border-teal-500/40 px-3 py-1.5 rounded-lg transition-all"
+                          className="flex items-center gap-1.5 theme-text-muted hover:text-sky-500 text-xs border theme-divider hover:border-sky-500/40 px-3 py-1.5 rounded-lg transition-all"
                         >
                           <Download size={13} /> PDF
                         </button>
@@ -384,7 +384,7 @@ export default function AdminDashboard({ theme, onThemeToggle, onLogout }: Admin
                             setDevisForRequest(null);
                             setShowDevisModal(true);
                           }}
-                          className="flex items-center gap-1.5 theme-text-muted hover:text-teal-500 text-xs border theme-divider hover:border-teal-500/40 px-3 py-1.5 rounded-lg transition-all"
+                          className="flex items-center gap-1.5 theme-text-muted hover:text-sky-500 text-xs border theme-divider hover:border-sky-500/40 px-3 py-1.5 rounded-lg transition-all"
                         >
                           <Eye size={13} /> Voir
                         </button>

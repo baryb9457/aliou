@@ -6,55 +6,51 @@ const services = [
     title: 'Développement Web',
     description: 'Création de sites vitrine, e-commerce et applications web sur mesure. Design moderne, responsive et optimisé pour le référencement.',
     tags: ['React', 'WordPress', 'SEO'],
-    color: 'teal',
+    color: 'sky',
   },
   {
     icon: Monitor,
     title: 'Support Informatique',
     description: 'Dépannage, configuration et maintenance de vos équipements informatiques. Intervention rapide pour les particuliers et professionnels.',
     tags: ['Dépannage', 'Installation', 'Réseau'],
-    color: 'emerald',
+    color: 'sky',
   },
   {
     icon: FileText,
     title: 'Gestion Administrative',
     description: 'Accompagnement dans la numérisation et organisation de vos documents administratifs. Création de formulaires et outils de gestion.',
     tags: ['Numérisation', 'Organisation', 'Outils'],
-    color: 'cyan',
+    color: 'sky',
   },
   {
     icon: Wrench,
     title: 'Maintenance & Dépannage',
     description: 'Entretien régulier de vos postes de travail, mise à jour des systèmes et résolution rapide des pannes informatiques.',
     tags: ['PC', 'Mac', 'Serveur'],
-    color: 'teal',
+    color: 'sky',
   },
   {
     icon: Shield,
     title: 'Sécurité Informatique',
     description: 'Audit et sécurisation de votre infrastructure. Installation d\'antivirus, pare-feux et bonnes pratiques de cybersécurité.',
     tags: ['Antivirus', 'Backup', 'VPN'],
-    color: 'emerald',
+    color: 'sky',
   },
   {
     icon: Zap,
     title: 'Formation & Conseil',
     description: 'Formation personnalisée à l\'utilisation des outils numériques. Conseils adaptés à vos besoins et à votre niveau.',
     tags: ['Formation', 'Conseil', 'Suivi'],
-    color: 'cyan',
+    color: 'sky',
   },
 ];
 
 const colorMap: Record<string, string> = {
-  teal: 'bg-teal-500/10 border-teal-500/20 text-teal-500',
-  emerald: 'bg-emerald-500/10 border-emerald-500/20 text-emerald-500',
-  cyan: 'bg-cyan-500/10 border-cyan-500/20 text-cyan-500',
+  sky: 'bg-sky-500/10 border-sky-500/20 text-sky-500',
 };
 
 const iconColorMap: Record<string, string> = {
-  teal: 'bg-teal-500/10 text-teal-500',
-  emerald: 'bg-emerald-500/10 text-emerald-500',
-  cyan: 'bg-cyan-500/10 text-cyan-500',
+  sky: 'bg-sky-500/10 text-sky-500',
 };
 
 export default function Services() {

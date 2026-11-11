@@ -21,7 +21,7 @@ function buildReference(data: DevisPdfData) {
 }
 
 function drawLogo(doc: jsPDF, x: number, y: number) {
-  doc.setFillColor(13, 148, 136);
+  doc.setFillColor(2, 132, 199);
   doc.roundedRect(x, y, 24, 24, 4, 4, 'F');
   doc.setDrawColor(255, 255, 255);
   doc.setLineWidth(0.4);
@@ -87,7 +87,7 @@ export function downloadDevisPdf(data: DevisPdfData) {
       (item.quantity * item.unit_price).toLocaleString('fr-FR', { style: 'currency', currency: 'EUR' }),
     ]),
     headStyles: {
-      fillColor: [13, 148, 136],
+      fillColor: [2, 132, 199],
       textColor: [255, 255, 255],
       fontStyle: 'bold',
     },
