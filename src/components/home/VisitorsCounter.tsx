@@ -58,10 +58,9 @@ export default function VisitorsCounter() {
         aria-controls={isOpen ? 'visitor-counter-panel' : undefined}
         aria-label={isOpen ? 'Fermer le compteur de visiteurs' : 'Afficher le compteur de visiteurs'}
         onClick={() => setIsOpen((open) => !open)}
-        className="theme-brand-button flex items-center gap-2 rounded-full px-4 py-3 text-sm font-semibold shadow-lg"
+        className="visitor-toggle-button flex h-12 w-12 items-center justify-center rounded-full shadow-lg"
       >
         {isOpen ? <X size={17} /> : <Users size={17} />}
-        <span>{isOpen ? 'Fermer' : 'Visiteurs'}</span>
       </button>
     </aside>
   );
