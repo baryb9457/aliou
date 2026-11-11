@@ -1,4 +1,4 @@
-import { isSupabaseConfigured, supabase } from './supabase';
+import { formatSupabaseError, isSupabaseConfigured, supabase } from './supabase';
 
 const VISITOR_TOKEN_KEY = 'kam-visitor-token';
 
@@ -51,7 +51,7 @@ export const trackVisitor = async () => {
 
 export const getTotalVisitors = async () => {
   if (!isSupabaseConfigured) {
-    return null;
+    throw new Error('Configuration Supabase manquante.');
   }
 
   const { count, error } = await supabase
@@ -59,7 +59,7 @@ export const getTotalVisitors = async () => {
     .select('*', { count: 'exact', head: true });
 
   if (error) {
-    return null;
+    throw new Error(formatSupabaseError(error));
   }
 
   return count ?? 0;

@@ -109,11 +109,11 @@ export default function App() {
       />
       <main>
         <Hero />
-        <VisitorsCounter />
         <Services />
         <Testimonials />
         <Contact />
       </main>
+      <VisitorsCounter />
       <Footer />
     </div>
   );
